@@ -35,7 +35,6 @@ class Parser:
                 elif tmp[0] == 'usemtl':
                     current_mtl = mtl_info[tmp[1]]
                 elif tmp[0] == 'v':
-                    tmp[3] = float(tmp[3]) - 20.0
                     v.append(tmp[1:])
                 elif tmp[0] == 'vt':
                     vt.append(tmp[1:])

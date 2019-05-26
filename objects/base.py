@@ -9,7 +9,7 @@ class Base(object):
         self.phong = phong  # Phong illumination constants. ex) {'ka': [], 'kd': [], 'ks': [], 'shininess': x}
         self.diffuse = diffuse  # Diffuse color of object
         self.ambient = ambient  # Ambient color of object
-        self.refract = refract  # Refraction rate
+        self.refract = float(refract) if refract is not None else None  # Refraction rate
         self.texture = Image.open(texture).convert('RGB') if texture else None
         self.texture_width = 0.0
         self.texture_height = 0.0

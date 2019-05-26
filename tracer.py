@@ -132,7 +132,7 @@ def main():
             os.fsync(progress)
             progress.close()
 
-    img.save('result.png', 'PNG')
+    img.save('result/result.png', 'PNG')
 
 
 if __name__ == '__main__':

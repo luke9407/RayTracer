@@ -13,6 +13,14 @@ objs.append(
     )
 )
 
+phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
+objs.append(
+    Sphere(
+        'MATT', phong, Vector(255, 0, 0), Vector(52, 0, 0), None, 'texture/sphere.jpg',
+        Vector(5, 0, -10), 2
+    )
+)
+
 # phong = {'ka': Vector(0.0, 0.0, 0.0), 'kd': Vector(0.0, 0.0, 0.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
 # objs.append(
 #     Triangle(

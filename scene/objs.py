@@ -3,23 +3,25 @@ from util.parser import *
 from objects.sphere import *
 from objects.triangle import *
 
+import os
+
 objs = []
 
-# phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
-# objs.append(
-#     Sphere(
-#         'REFLECTIVE_AND_REFRACTIVE', phong, Vector(255, 0, 0), Vector(52, 0, 0), 1.9, 'texture/sphere.jpg',
-#         Vector(0, -4, -10), 1
-#     )
-# )
-#
-# phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
-# objs.append(
-#     Sphere(
-#         'REFLECTIVE_AND_REFRACTIVE', phong, Vector(255, 0, 0), Vector(52, 0, 0), 1.9, 'texture/sphere.jpg',
-#         Vector(-3, -4, -10), 1
-#     )
-# )
+phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
+objs.append(
+    Sphere(
+        'REFLECTIVE_AND_REFRACTIVE', phong, Vector(255, 0, 0), Vector(52, 0, 0), 1.9, 'texture/sphere.jpg',
+        Vector(0, -4, -10), 1
+    )
+)
+
+phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
+objs.append(
+    Sphere(
+        'REFLECTIVE_AND_REFRACTIVE', phong, Vector(255, 0, 0), Vector(52, 0, 0), 1.9, 'texture/sphere.jpg',
+        Vector(-3, -4, -10), 1
+    )
+)
 
 # phong = {'ka': Vector(0.0, 0.0, 0.0), 'kd': Vector(0.0, 0.0, 0.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
 # objs.append(
@@ -169,4 +171,9 @@ objs.append(
 #         [Vector(0, 0, 1), Vector(0, 0, 1), Vector(0, 0, 1)]
 #     )
 # )
-objs += Parser('obj/humanoid.obj').parse()
+objs += Parser(
+    os.path.join(
+        os.path.dirname(__file__),
+        '../obj/iphone.obj'
+    )
+).parse()

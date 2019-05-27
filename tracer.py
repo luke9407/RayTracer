@@ -39,7 +39,6 @@ def cast(ray, objs, lights, depth, default_color):
         reflected_ray = Ray(hit.point + hit.normal.scale(0.0001), reflected)
 
         color = cast(reflected_ray, objs, lights, depth + 1, default_color).scale(0.1)
-        # color = Vector(0, 0, 0)
 
         refracted = ray.direction.refract(hit.normal, hit.obj.refract)
         if refracted is not None:

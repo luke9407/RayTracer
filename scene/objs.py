@@ -11,7 +11,7 @@ phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(
 objs.append(
     Sphere(
         'REFLECTIVE_AND_REFRACTIVE', phong, Vector(255, 0, 0), Vector(52, 0, 0), 1.9, 'texture/sphere.jpg',
-        Vector(-5, -4, -10), 1
+        Vector(-5, -3, -10), 2
     )
 )
 
@@ -22,24 +22,6 @@ objs.append(
         Vector(5, 0, -10), 2
     )
 )
-
-# phong = {'ka': Vector(0.0, 0.0, 0.0), 'kd': Vector(0.0, 0.0, 0.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
-# objs.append(
-#     Triangle(
-#         'REFLECTIVE', phong, Vector(0, 255, 0), Vector(0, 52, 0), None, None,
-#         [Vector(-0.5, -1.0, -6), Vector(0.5, -1.0, -6), Vector(0.5, -0.3, -6)],
-#         [],
-#         []
-#     )
-# )
-# objs.append(
-#     Triangle(
-#         'REFLECTIVE', phong, Vector(0, 255, 0), Vector(0, 52, 0), None, None,
-#         [Vector(-0.5, -1.0, -6), Vector(0.5, -0.3, -6), Vector(-0.5, -0.3, -6)],
-#         [],
-#         []
-#     )
-# )
 
 phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
 objs.append(
@@ -83,15 +65,6 @@ objs.append(
         []
     )
 )
-
-# objs.append(Sphere('MATT', phong, Vector(0, 255, 0), Vector(0, 52, 0), None, Vector(1, 0, -20), 1))
-# objs.append(Sphere('MATT', phong, Vector(0, 0, 255), Vector(0, 0, 52), None, Vector(0.5, 1, -20), 1))
-
-# phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 4}
-# objs.append(Sphere('REFLECTIVE_AND_REFRACTIVE', phong, Vector(0, 255, 0), Vector(0, 52, 0), 1.333, Vector(0.5, -0.7, -3), 0.3))
-
-# phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 16}
-# objs.append(Plane('MATT', phong, Vector(255, 255, 0), Vector(52, 52, 0), None, Vector(0, -1, 0), Vector(0, 1, 0)))
 
 phong = {'ka': Vector(1.0, 1.0, 1.0), 'kd': Vector(1.0, 1.0, 1.0), 'ks': Vector(1.0, 1.0, 1.0), 'shininess': 16}
 # Bottom
@@ -180,9 +153,10 @@ objs.append(
     )
 )
 
-# objs += Parser(
-#     os.path.join(
-#         os.path.dirname(__file__),
-#         '../obj/iphone.obj'
-#     )
-# ).parse()
+objs += Parser(
+    os.path.join(
+        os.path.dirname(__file__),
+        '../obj/estrellica.obj'
+    ),
+    [1, 0, 0], 1.57, 0.3
+).parse()

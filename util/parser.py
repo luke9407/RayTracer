@@ -1,10 +1,14 @@
 from objects.triangle import *
+from util.quaternion import *
 import os
 
 
 class Parser:
-    def __init__(self, f):
+    def __init__(self, f, axis, angle, scale):
         self.f = f
+        self.scale = scale
+        self.q = Quaternion.q(Quaternion.imaginary(axis), angle)
+        self.q_inv = self.q.inverse()
 
     def parse(self):
         objs = []
@@ -35,11 +39,18 @@ class Parser:
                 elif tmp[0] == 'usemtl':
                     current_mtl = mtl_info[tmp[1]]
                 elif tmp[0] == 'v':
-                    v.append(tmp[1:])
+                    p = Quaternion.imaginary(tmp[1:])
+                    p_new = (self.q * p * self.q_inv).scale(self.scale).to_list()
+                    p_new[2] -= 10.0
+
+                    v.append(p_new)
                 elif tmp[0] == 'vt':
                     vt.append(tmp[1:])
                 elif tmp[0] == 'vn':
-                    vn.append(tmp[1:])
+                    p = Quaternion.imaginary(tmp[1:])
+                    p_new = (self.q * p * self.q_inv).to_list()
+
+                    vn.append(p_new)
                 elif tmp[0] == 'f':
                     p_0, p_1, p_2 = list(
                         map(
@@ -51,16 +62,23 @@ class Parser:
                     t_v = map(lambda x: Vector.from_list(x), [v[p_0[0] - 1], v[p_1[0] - 1], v[p_2[0] - 1]])
                     t_vt = []
                     if len(p_0) >= 2 and p_0[1] != '':
-                        t_vt = map(lambda x: Vector.from_list(x), [vt[p_0[1] - 1], vt[p_1[1] - 1], vt[p_2[1] - 1]])
+                        t_vt = map(
+                            lambda x: map(float, x),
+                            [vt[p_0[1] - 1], vt[p_1[1] - 1], vt[p_2[1] - 1]]
+                        )
                     t_vn = []
                     if len(p_0) >= 3 and p_0[2] != '':
-                        t_vn = map(lambda x: Vector.from_list(x), [vn[p_0[2] - 1], vn[p_1[2] - 1], vn[p_2[2] - 1]])
+                        t_vn = map(
+                            lambda x: Vector.from_list(x).normalize(),
+                            [vn[p_0[2] - 1], vn[p_1[2] - 1], vn[p_2[2] - 1]]
+                        )
 
+                    t = 'MATT' if current_mtl is None else current_mtl['t']
                     phong = default_phong if current_mtl is None else current_mtl['phong']
                     texture = None if current_mtl is None else current_mtl['texture']
                     objs.append(
                         Triangle(
-                            'MATT', phong, Vector(255, 0, 0), Vector(52, 0, 0), None, texture,
+                            t, phong, Vector(255, 0, 0), Vector(52, 0, 0), None, texture,
                             t_v, t_vt, t_vn
                         )
                     )
@@ -79,6 +97,7 @@ class Parser:
 
                 if tmp[0] == 'newmtl':
                     ret[tmp[1]] = {
+                        't': 'MATT',
                         'phong': {'ka': None, 'kd': None, 'ks': None, 'shininess': None},
                         'texture': None
                     }
@@ -100,5 +119,12 @@ class Parser:
                         os.path.dirname(__file__),
                         '../texture/{0}'.format(tmp[1])
                     )
+                elif tmp[0].upper() == 'ILLUM':
+                    if int(tmp[1]) == 0:
+                        ret[current_material]['t'] = 'MATT'
+                    if int(tmp[1]) == 1:
+                        ret[current_material]['t'] = 'REFLECTIVE'
+                    if int(tmp[1]) == 2:
+                        ret[current_material]['t'] = 'REFLECTIVE_AND_REFRACTIVE'
 
         return ret
